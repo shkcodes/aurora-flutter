@@ -9,7 +9,8 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Weather.serializer)
       ..add(WeatherResponse.serializer)
-      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(Weather)]),
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Weather)]),
           () => new ListBuilder<Weather>()))
     .build();
 
