@@ -5,7 +5,9 @@ import 'package:built_value/serializer.dart';
 part 'weather.g.dart';
 
 abstract class WeatherResponse implements Built<WeatherResponse, WeatherResponseBuilder> {
-  BuiltList<Weather> get consolidated_weather;
+
+  @BuiltValueField(wireName: 'consolidated_weather')
+  BuiltList<Weather> get consolidatedWeather;
 
   factory WeatherResponse([void Function(WeatherResponseBuilder) updates]) = _$WeatherResponse;
 
@@ -17,9 +19,11 @@ abstract class WeatherResponse implements Built<WeatherResponse, WeatherResponse
 abstract class Weather implements Built<Weather, WeatherBuilder> {
   int get id;
 
-  String get weather_state_name;
+  @BuiltValueField(wireName: 'weather_state_name')
+  String get weatherStateName;
 
-  String get weather_state_abbr;
+  @BuiltValueField(wireName: 'weather_state_abbr')
+  String get weatherStateAbbr;
 
   factory Weather([void Function(WeatherBuilder) updates]) = _$Weather;
 

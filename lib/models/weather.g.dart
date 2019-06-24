@@ -22,7 +22,7 @@ class _$WeatherResponseSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'consolidated_weather',
-      serializers.serialize(object.consolidated_weather,
+      serializers.serialize(object.consolidatedWeather,
           specifiedType:
           const FullType(BuiltList, const [const FullType(Weather)])),
     ];
@@ -42,7 +42,7 @@ class _$WeatherResponseSerializer
       final dynamic value = iterator.current;
       switch (key) {
         case 'consolidated_weather':
-          result.consolidated_weather.replace(serializers.deserialize(value,
+          result.consolidatedWeather.replace(serializers.deserialize(value,
               specifiedType: const FullType(
                   BuiltList, const [const FullType(Weather)])) as BuiltList);
           break;
@@ -66,10 +66,10 @@ class _$WeatherSerializer implements StructuredSerializer<Weather> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
       'weather_state_name',
-      serializers.serialize(object.weather_state_name,
+      serializers.serialize(object.weatherStateName,
           specifiedType: const FullType(String)),
       'weather_state_abbr',
-      serializers.serialize(object.weather_state_abbr,
+      serializers.serialize(object.weatherStateAbbr,
           specifiedType: const FullType(String)),
     ];
 
@@ -92,11 +92,11 @@ class _$WeatherSerializer implements StructuredSerializer<Weather> {
               specifiedType: const FullType(int)) as int;
           break;
         case 'weather_state_name':
-          result.weather_state_name = serializers.deserialize(value,
+          result.weatherStateName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'weather_state_abbr':
-          result.weather_state_abbr = serializers.deserialize(value,
+          result.weatherStateAbbr = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -108,15 +108,15 @@ class _$WeatherSerializer implements StructuredSerializer<Weather> {
 
 class _$WeatherResponse extends WeatherResponse {
   @override
-  final BuiltList<Weather> consolidated_weather;
+  final BuiltList<Weather> consolidatedWeather;
 
   factory _$WeatherResponse([void Function(WeatherResponseBuilder) updates]) =>
       (new WeatherResponseBuilder()..update(updates)).build();
 
-  _$WeatherResponse._({this.consolidated_weather}) : super._() {
-    if (consolidated_weather == null) {
+  _$WeatherResponse._({this.consolidatedWeather}) : super._() {
+    if (consolidatedWeather == null) {
       throw new BuiltValueNullFieldError(
-          'WeatherResponse', 'consolidated_weather');
+          'WeatherResponse', 'consolidatedWeather');
     }
   }
 
@@ -133,18 +133,18 @@ class _$WeatherResponse extends WeatherResponse {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is WeatherResponse &&
-        consolidated_weather == other.consolidated_weather;
+        consolidatedWeather == other.consolidatedWeather;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, consolidated_weather.hashCode));
+    return $jf($jc(0, consolidatedWeather.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('WeatherResponse')
-          ..add('consolidated_weather', consolidated_weather))
+      ..add('consolidatedWeather', consolidatedWeather))
         .toString();
   }
 }
@@ -153,17 +153,19 @@ class WeatherResponseBuilder
     implements Builder<WeatherResponse, WeatherResponseBuilder> {
   _$WeatherResponse _$v;
 
-  ListBuilder<Weather> _consolidated_weather;
-  ListBuilder<Weather> get consolidated_weather =>
-      _$this._consolidated_weather ??= new ListBuilder<Weather>();
-  set consolidated_weather(ListBuilder<Weather> consolidated_weather) =>
-      _$this._consolidated_weather = consolidated_weather;
+  ListBuilder<Weather> _consolidatedWeather;
+
+  ListBuilder<Weather> get consolidatedWeather =>
+      _$this._consolidatedWeather ??= new ListBuilder<Weather>();
+
+  set consolidatedWeather(ListBuilder<Weather> consolidatedWeather) =>
+      _$this._consolidatedWeather = consolidatedWeather;
 
   WeatherResponseBuilder();
 
   WeatherResponseBuilder get _$this {
     if (_$v != null) {
-      _consolidated_weather = _$v.consolidated_weather?.toBuilder();
+      _consolidatedWeather = _$v.consolidatedWeather?.toBuilder();
       _$v = null;
     }
     return this;
@@ -188,12 +190,12 @@ class WeatherResponseBuilder
     try {
       _$result = _$v ??
           new _$WeatherResponse._(
-              consolidated_weather: consolidated_weather.build());
+              consolidatedWeather: consolidatedWeather.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'consolidated_weather';
-        consolidated_weather.build();
+        _$failedField = 'consolidatedWeather';
+        consolidatedWeather.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'WeatherResponse', _$failedField, e.toString());
@@ -209,23 +211,23 @@ class _$Weather extends Weather {
   @override
   final int id;
   @override
-  final String weather_state_name;
+  final String weatherStateName;
   @override
-  final String weather_state_abbr;
+  final String weatherStateAbbr;
 
   factory _$Weather([void Function(WeatherBuilder) updates]) =>
       (new WeatherBuilder()..update(updates)).build();
 
-  _$Weather._({this.id, this.weather_state_name, this.weather_state_abbr})
+  _$Weather._({this.id, this.weatherStateName, this.weatherStateAbbr})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('Weather', 'id');
     }
-    if (weather_state_name == null) {
-      throw new BuiltValueNullFieldError('Weather', 'weather_state_name');
+    if (weatherStateName == null) {
+      throw new BuiltValueNullFieldError('Weather', 'weatherStateName');
     }
-    if (weather_state_abbr == null) {
-      throw new BuiltValueNullFieldError('Weather', 'weather_state_abbr');
+    if (weatherStateAbbr == null) {
+      throw new BuiltValueNullFieldError('Weather', 'weatherStateAbbr');
     }
   }
 
@@ -242,22 +244,21 @@ class _$Weather extends Weather {
     if (identical(other, this)) return true;
     return other is Weather &&
         id == other.id &&
-        weather_state_name == other.weather_state_name &&
-        weather_state_abbr == other.weather_state_abbr;
+        weatherStateName == other.weatherStateName &&
+        weatherStateAbbr == other.weatherStateAbbr;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, id.hashCode), weather_state_name.hashCode),
-        weather_state_abbr.hashCode));
+    return $jf($jc($jc($jc(0, id.hashCode), weatherStateName.hashCode),
+        weatherStateAbbr.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Weather')
-          ..add('id', id)
-          ..add('weather_state_name', weather_state_name)
-          ..add('weather_state_abbr', weather_state_abbr))
+          ..add('id', id)..add('weatherStateName', weatherStateName)..add(
+          'weatherStateAbbr', weatherStateAbbr))
         .toString();
   }
 }
@@ -269,23 +270,27 @@ class WeatherBuilder implements Builder<Weather, WeatherBuilder> {
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
 
-  String _weather_state_name;
-  String get weather_state_name => _$this._weather_state_name;
-  set weather_state_name(String weather_state_name) =>
-      _$this._weather_state_name = weather_state_name;
+  String _weatherStateName;
 
-  String _weather_state_abbr;
-  String get weather_state_abbr => _$this._weather_state_abbr;
-  set weather_state_abbr(String weather_state_abbr) =>
-      _$this._weather_state_abbr = weather_state_abbr;
+  String get weatherStateName => _$this._weatherStateName;
+
+  set weatherStateName(String weatherStateName) =>
+      _$this._weatherStateName = weatherStateName;
+
+  String _weatherStateAbbr;
+
+  String get weatherStateAbbr => _$this._weatherStateAbbr;
+
+  set weatherStateAbbr(String weatherStateAbbr) =>
+      _$this._weatherStateAbbr = weatherStateAbbr;
 
   WeatherBuilder();
 
   WeatherBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
-      _weather_state_name = _$v.weather_state_name;
-      _weather_state_abbr = _$v.weather_state_abbr;
+      _weatherStateName = _$v.weatherStateName;
+      _weatherStateAbbr = _$v.weatherStateAbbr;
       _$v = null;
     }
     return this;
@@ -309,8 +314,8 @@ class WeatherBuilder implements Builder<Weather, WeatherBuilder> {
     final _$result = _$v ??
         new _$Weather._(
             id: id,
-            weather_state_name: weather_state_name,
-            weather_state_abbr: weather_state_abbr);
+            weatherStateName: weatherStateName,
+            weatherStateAbbr: weatherStateAbbr);
     replace(_$result);
     return _$result;
   }

@@ -27,26 +27,23 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.light(),
-      child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(48),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/app_icon.png'),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  'AURORA WEATHER',
-                  style: TextStyle(fontSize: 24, letterSpacing: 1.2, fontFamily: 'Rokkitt'),
-                ),
-              ],
-            ),
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(48),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset('assets/images/app_icon.png'),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                'AURORA WEATHER',
+                style: TextStyle(fontSize: 24, letterSpacing: 1.2, fontFamily: 'Rokkitt'),
+              ),
+            ],
           ),
         ),
       ),

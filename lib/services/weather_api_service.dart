@@ -22,13 +22,25 @@ class WeatherApiClient {
 
   Future<List<Weather>> fetchWeather(int locationId) async {
     final weatherUrl = '$baseUrl/api/location/$locationId';
-    final weatherResponse = await _dio.get(weatherUrl);
+    final Response weatherResponse = await _dio.get(weatherUrl);
 
     if (weatherResponse.statusCode != 200) {
       throw Exception('error getting weather for location');
     }
-    final WeatherResponse response =
-        serializers.deserializeWith(WeatherResponse.serializer, json.decode(weatherResponse.data));
-    return response.consolidated_weather.toList();
+    try {
+      print(weatherResponse.data);
+      final WeatherResponse response =
+      serializers.deserializeWith(
+          WeatherResponse.serializer, json.decode(weatherResponse.data.toString()));
+      var op = response.consolidatedWeather.toList();
+      print(op);
+      print("n succ");
+      return op;
+    }
+    catch (e, stackTrace) {
+      print(stackTrace);
+      print("n fail");
+      return [];
+    }
   }
 }
