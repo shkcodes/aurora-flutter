@@ -1,46 +1,34 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:my_weather_app/models/serializers.dart';
 import 'package:my_weather_app/models/weather.dart';
 
 class WeatherApiClient {
   static const baseUrl = 'https://www.metaweather.com';
-  final Dio _dio = Dio();
+  final httpClient = http.Client();
 
   Future<int> getLocationId(String city) async {
     final locationUrl = '$baseUrl/api/location/search/?query=$city';
-    final locationResponse = await _dio.get(locationUrl);
+    final locationResponse = await httpClient.get(locationUrl);
     if (locationResponse.statusCode != 200) {
       throw Exception('error getting locationId for city');
     }
 
-    final locationJson = jsonDecode(locationResponse.data) as List;
+    final locationJson = jsonDecode(locationResponse.body) as List;
     return (locationJson.first)['woeid'];
   }
 
   Future<List<Weather>> fetchWeather(int locationId) async {
     final weatherUrl = '$baseUrl/api/location/$locationId';
-    final Response weatherResponse = await _dio.get(weatherUrl);
+    final weatherResponse = await this.httpClient.get(weatherUrl);
 
     if (weatherResponse.statusCode != 200) {
       throw Exception('error getting weather for location');
     }
-    try {
-      print(weatherResponse.data);
-      final WeatherResponse response =
-      serializers.deserializeWith(
-          WeatherResponse.serializer, json.decode(weatherResponse.data.toString()));
-      var op = response.consolidatedWeather.toList();
-      print(op);
-      print("n succ");
-      return op;
-    }
-    catch (e, stackTrace) {
-      print(stackTrace);
-      print("n fail");
-      return [];
-    }
+    final weather =
+    serializers.deserializeWith(WeatherResponse.serializer, json.decode(weatherResponse.body));
+    return weather.consolidatedWeather.toList();
   }
 }
