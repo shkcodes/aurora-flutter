@@ -6,6 +6,7 @@ import 'package:my_weather_app/bloc/add_location_bloc.dart';
 import 'package:my_weather_app/state/add_location_state.dart';
 import 'package:my_weather_app/ui/home.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddLocationScreen extends StatefulWidget {
   @override
@@ -28,11 +29,15 @@ class AddLocationScreenState extends State<AddLocationScreen> {
     const iconSize = 75.0;
     return BlocListener<AddLocationEvent, AddLocationState>(
       bloc: bloc,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.locationId != 0) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          final locationsList = prefs.getStringList('locations') ?? [];
+          locationsList.add(state.locationId.toString());
+          prefs.setStringList('locations', locationsList);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen(locationId: state.locationId)),
+            MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         }
       },

@@ -7,30 +7,31 @@ import 'package:intl/intl.dart';
 import 'package:my_weather_app/bloc/weather_bloc.dart';
 import 'package:my_weather_app/state/weather_state.dart';
 import 'package:my_weather_app/ui/WeatherForecastCarousel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  final int locationId;
-
-  HomeScreen({this.locationId});
+  HomeScreen();
 
   @override
   HomeScreenState createState() {
-    return HomeScreenState(locationId: locationId);
+    return HomeScreenState();
   }
 }
 
 class HomeScreenState extends State<HomeScreen> {
   WeatherBloc bloc;
 
-  final int locationId;
-
-  HomeScreenState({this.locationId});
-
   @override
   void initState() {
     bloc = BlocProvider.of<WeatherBloc>(context);
     super.initState();
-    bloc.dispatch(LoadWeatherEvent(locationId));
+    loadWeatherForLocations();
+  }
+
+  Future loadWeatherForLocations() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final locationsList = prefs.getStringList('locations');
+    bloc.dispatch(LoadWeatherEvent(int.parse(locationsList[0])));
   }
 
   Widget build(BuildContext context) {

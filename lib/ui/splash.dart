@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,8 +22,14 @@ class SplashScreenState extends State<SplashScreen> {
     return new Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/add_location');
+  Future navigationPage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final locationsList = prefs.getStringList('locations') ?? [];
+    if (locationsList.isEmpty) {
+      Navigator.of(context).pushReplacementNamed('/add_location');
+    } else {
+      Navigator.of(context).pushReplacementNamed('/home');
+    }
   }
 
   @override

@@ -19,7 +19,6 @@ class AddLocationBloc extends Bloc<AddLocationEvent, AddLocationState> {
       yield currentState.rebuild((b) => b..isLoading = true);
       final location = await apiClient.fetchCitiesForLocation(event.latitude, event.longitude);
       yield currentState.rebuild((b) => b
-        ..isLoading = false
         ..locationId = location.locationId);
     }
   }
