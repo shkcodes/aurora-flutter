@@ -9,20 +9,28 @@ import 'package:my_weather_app/state/weather_state.dart';
 import 'package:my_weather_app/ui/WeatherForecastCarousel.dart';
 
 class HomeScreen extends StatefulWidget {
+  final int locationId;
+
+  HomeScreen({this.locationId});
+
   @override
   HomeScreenState createState() {
-    return HomeScreenState();
+    return HomeScreenState(locationId: locationId);
   }
 }
 
 class HomeScreenState extends State<HomeScreen> {
   WeatherBloc bloc;
 
+  final int locationId;
+
+  HomeScreenState({this.locationId});
+
   @override
   void initState() {
     bloc = BlocProvider.of<WeatherBloc>(context);
     super.initState();
-    bloc.dispatch(LoadWeatherEvent());
+    bloc.dispatch(LoadWeatherEvent(locationId));
   }
 
   Widget build(BuildContext context) {
@@ -31,8 +39,22 @@ class HomeScreenState extends State<HomeScreen> {
             bloc: bloc,
             builder: (BuildContext context, WeatherState state) {
               if (state.isLoading || state.weather.isEmpty) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/bg.jpg'), fit: BoxFit.cover),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+                        child: Container(
+                          decoration: new BoxDecoration(color: Colors.black.withOpacity(0.2)),
+                        ),
+                      ),
+                      Center(child: CircularProgressIndicator())
+                    ],
+                  ),
                 );
               } else {
                 final currentWeather = state.weather[0];

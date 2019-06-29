@@ -7,6 +7,7 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Location.serializer)
       ..add(Weather.serializer)
       ..add(WeatherResponse.serializer)
       ..addBuilderFactory(

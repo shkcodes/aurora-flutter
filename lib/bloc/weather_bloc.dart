@@ -17,7 +17,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
     if (event is LoadWeatherEvent) {
       yield currentState.rebuild((b) => b..isLoading = true);
-      final weather = await apiClient.fetchWeather(44418);
+      final weather = await apiClient.fetchWeather(event.locationId);
       List<Weather> weatherForecast = weather.consolidatedWeather.toList();
       yield currentState.rebuild((b) => b
         ..isLoading = false
@@ -30,6 +30,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 abstract class WeatherEvent {}
 
 class LoadWeatherEvent extends WeatherEvent {
+  final int locationId;
+
+  LoadWeatherEvent(this.locationId);
+
   @override
   String toString() => 'LoadWeatherEvent';
 }
