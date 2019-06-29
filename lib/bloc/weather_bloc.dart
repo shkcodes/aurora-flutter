@@ -17,10 +17,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
     if (event is LoadWeatherEvent) {
       yield currentState.rebuild((b) => b..isLoading = true);
-      List<Weather> weather = await apiClient.fetchWeather(44418);
+      final weather = await apiClient.fetchWeather(44418);
+      List<Weather> weatherForecast = weather.consolidatedWeather.toList();
       yield currentState.rebuild((b) => b
         ..isLoading = false
-        ..weather = weather);
+        ..location = weather.location
+        ..weather = weatherForecast);
     }
   }
 }

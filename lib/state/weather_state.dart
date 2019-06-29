@@ -6,6 +6,9 @@ part 'weather_state.g.dart';
 abstract class WeatherState implements Built<WeatherState, WeatherStateBuilder> {
   List<Weather> get weather;
 
+  @nullable
+  String get location;
+
   bool get isLoading;
 
   WeatherState._();

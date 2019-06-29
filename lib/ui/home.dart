@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:my_weather_app/bloc/weather_bloc.dart';
 import 'package:my_weather_app/state/weather_state.dart';
 
@@ -33,8 +34,7 @@ class HomeScreenState extends State<HomeScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                print(state.weather[0].weatherStateName);
-                final weatherInfo = state.weather[0];
+                final currentWeather = state.weather[0];
                 return Stack(
                   children: <Widget>[
                     Container(
@@ -52,14 +52,43 @@ class HomeScreenState extends State<HomeScreen> {
                     Center(
                       child: Column(
                         children: <Widget>[
-                          SvgImage.asset(weatherInfo.getIcon(), new Size(100.0, 100.0)),
+                          SizedBox(
+                            height: 96.0,
+                          ),
+                          Text(
+                            state.location.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 32,
+                                letterSpacing: 10,
+                                fontFamily: 'Rokkitt',
+                                color: Colors.white),
+                          ),
+                          Text(
+                            getTodayDate(),
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 64.0,
+                          ),
+                          Text(
+                            currentWeather.weatherStateName.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 32,
+                                letterSpacing: 2,
+                                fontFamily: 'Rokkitt',
+                                color: Colors.white54),
+                          ),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          SvgImage.asset(currentWeather.getIcon(), new Size(150.0, 150.0)),
                           SizedBox(
                             height: 8.0,
                           ),
                           Text(
-                            weatherInfo.weatherStateName.toUpperCase(),
+                            "${currentWeather.temperature.toInt()}°",
                             style: TextStyle(
-                                fontSize: 32,
+                                fontSize: 64,
                                 letterSpacing: 3,
                                 fontFamily: 'Rokkitt',
                                 color: Colors.white54),
@@ -71,5 +100,10 @@ class HomeScreenState extends State<HomeScreen> {
                 );
               }
             }));
+  }
+
+  String getTodayDate() {
+    var now = new DateTime.now();
+    return DateFormat('EEE, dd MMM').format(now).toUpperCase();
   }
 }

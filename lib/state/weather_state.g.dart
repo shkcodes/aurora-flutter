@@ -10,12 +10,14 @@ class _$WeatherState extends WeatherState {
   @override
   final List<Weather> weather;
   @override
+  final String location;
+  @override
   final bool isLoading;
 
   factory _$WeatherState([void Function(WeatherStateBuilder) updates]) =>
       (new WeatherStateBuilder()..update(updates)).build();
 
-  _$WeatherState._({this.weather, this.isLoading}) : super._() {
+  _$WeatherState._({this.weather, this.location, this.isLoading}) : super._() {
     if (weather == null) {
       throw new BuiltValueNullFieldError('WeatherState', 'weather');
     }
@@ -34,36 +36,43 @@ class _$WeatherState extends WeatherState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is WeatherState && weather == other.weather && isLoading == other.isLoading;
+    return other is WeatherState &&
+        weather == other.weather &&
+        location == other.location &&
+        isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, weather.hashCode), isLoading.hashCode));
+    return $jf($jc(
+        $jc($jc(0, weather.hashCode), location.hashCode), isLoading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('WeatherState')
-          ..add('weather', weather)
+          ..add('weather', weather)..add('location', location)
           ..add('isLoading', isLoading))
         .toString();
   }
 }
 
-class WeatherStateBuilder implements Builder<WeatherState, WeatherStateBuilder> {
+class WeatherStateBuilder
+    implements Builder<WeatherState, WeatherStateBuilder> {
   _$WeatherState _$v;
 
   List<Weather> _weather;
-
   List<Weather> get weather => _$this._weather;
-
   set weather(List<Weather> weather) => _$this._weather = weather;
 
+  String _location;
+
+  String get location => _$this._location;
+
+  set location(String location) => _$this._location = location;
+
   bool _isLoading;
-
   bool get isLoading => _$this._isLoading;
-
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   WeatherStateBuilder();
@@ -71,6 +80,7 @@ class WeatherStateBuilder implements Builder<WeatherState, WeatherStateBuilder> 
   WeatherStateBuilder get _$this {
     if (_$v != null) {
       _weather = _$v.weather;
+      _location = _$v.location;
       _isLoading = _$v.isLoading;
       _$v = null;
     }
@@ -92,7 +102,9 @@ class WeatherStateBuilder implements Builder<WeatherState, WeatherStateBuilder> 
 
   @override
   _$WeatherState build() {
-    final _$result = _$v ?? new _$WeatherState._(weather: weather, isLoading: isLoading);
+    final _$result = _$v ??
+        new _$WeatherState._(
+            weather: weather, location: location, isLoading: isLoading);
     replace(_$result);
     return _$result;
   }

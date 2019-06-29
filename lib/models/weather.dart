@@ -8,6 +8,10 @@ abstract class WeatherResponse implements Built<WeatherResponse, WeatherResponse
   @BuiltValueField(wireName: 'consolidated_weather')
   BuiltList<Weather> get consolidatedWeather;
 
+
+  @BuiltValueField(wireName: 'title')
+  String get location;
+
   factory WeatherResponse([void Function(WeatherResponseBuilder) updates]) = _$WeatherResponse;
 
   static Serializer<WeatherResponse> get serializer => _$weatherResponseSerializer;
@@ -23,6 +27,9 @@ abstract class Weather implements Built<Weather, WeatherBuilder> {
 
   @BuiltValueField(wireName: 'weather_state_abbr')
   String get weatherStateAbbr;
+
+  @BuiltValueField(wireName: 'the_temp')
+  double get temperature;
 
   factory Weather([void Function(WeatherBuilder) updates]) = _$Weather;
 
