@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:my_weather_app/bloc/weather_bloc.dart';
 import 'package:my_weather_app/state/weather_state.dart';
+import 'package:my_weather_app/ui/WeatherForecastCarousel.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -93,6 +94,12 @@ class HomeScreenState extends State<HomeScreen> {
                                 fontFamily: 'Rokkitt',
                                 color: Colors.white54),
                           ),
+                          SizedBox(
+                            height: 32.0,
+                          ),
+                          WeatherForecastCarousel(
+                            weather: state.weather.sublist(1),
+                          )
                         ],
                       ),
                     ),
