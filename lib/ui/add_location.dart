@@ -9,14 +9,21 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddLocationScreen extends StatefulWidget {
+  final bool isOnboardingFlow;
+
+  AddLocationScreen({this.isOnboardingFlow});
+
   @override
   State<StatefulWidget> createState() {
-    return AddLocationScreenState();
+    return AddLocationScreenState(isOnboardingFlow: isOnboardingFlow);
   }
 }
 
 class AddLocationScreenState extends State<AddLocationScreen> {
   final AddLocationBloc bloc = AddLocationBloc();
+  final bool isOnboardingFlow;
+
+  AddLocationScreenState({this.isOnboardingFlow});
 
   @override
   void initState() {
@@ -40,10 +47,14 @@ class AddLocationScreenState extends State<AddLocationScreen> {
           final locationsList = prefs.getStringList('locations') ?? [];
           locationsList.add(state.locationId.toString());
           prefs.setStringList('locations', locationsList.toSet().toList());
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+          if (isOnboardingFlow != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen(locationsList.toSet().toList())),
+            );
+          } else {
+            Navigator.pop(context, locationsList.toSet().toList());
+          }
         }
       },
       child: Scaffold(

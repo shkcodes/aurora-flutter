@@ -12,7 +12,8 @@ class _$AddLocationState extends AddLocationState {
   @override
   final int locationId;
 
-  factory _$AddLocationState([void Function(AddLocationStateBuilder) updates]) =>
+  factory _$AddLocationState(
+          [void Function(AddLocationStateBuilder) updates]) =>
       (new AddLocationStateBuilder()..update(updates)).build();
 
   _$AddLocationState._({this.isLoading, this.locationId}) : super._() {
@@ -29,7 +30,8 @@ class _$AddLocationState extends AddLocationState {
       (toBuilder()..update(updates)).build();
 
   @override
-  AddLocationStateBuilder toBuilder() => new AddLocationStateBuilder()..replace(this);
+  AddLocationStateBuilder toBuilder() =>
+      new AddLocationStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -53,19 +55,16 @@ class _$AddLocationState extends AddLocationState {
   }
 }
 
-class AddLocationStateBuilder implements Builder<AddLocationState, AddLocationStateBuilder> {
+class AddLocationStateBuilder
+    implements Builder<AddLocationState, AddLocationStateBuilder> {
   _$AddLocationState _$v;
 
   bool _isLoading;
-
   bool get isLoading => _$this._isLoading;
-
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   int _locationId;
-
   int get locationId => _$this._locationId;
-
   set locationId(int locationId) => _$this._locationId = locationId;
 
   AddLocationStateBuilder();
@@ -94,7 +93,8 @@ class AddLocationStateBuilder implements Builder<AddLocationState, AddLocationSt
 
   @override
   _$AddLocationState build() {
-    final _$result = _$v ?? new _$AddLocationState._(isLoading: isLoading, locationId: locationId);
+    final _$result = _$v ??
+        new _$AddLocationState._(isLoading: isLoading, locationId: locationId);
     replace(_$result);
     return _$result;
   }

@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:my_weather_app/ui/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'add_location.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,9 +29,18 @@ class SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final locationsList = prefs.getStringList('locations') ?? [];
     if (locationsList.isEmpty) {
-      Navigator.of(context).pushReplacementNamed('/add_location');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddLocationScreen(
+                  isOnboardingFlow: true,
+                )),
+      );
     } else {
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen(locationsList)),
+      );
     }
   }
 

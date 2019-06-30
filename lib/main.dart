@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_weather_app/ui/add_location.dart';
-import 'package:my_weather_app/ui/home.dart';
 import 'package:my_weather_app/ui/splash.dart';
 
 import 'bloc/splash_bloc.dart';
@@ -27,10 +25,6 @@ class WeatherApp extends StatelessWidget {
           bloc: splashBloc,
           child: SplashScreen(),
         ),
-        routes: <String, WidgetBuilder>{
-          '/home': (BuildContext context) => HomeScreen(),
-          '/add_location': (BuildContext context) => AddLocationScreen(),
-        },
       ),
     );
   }

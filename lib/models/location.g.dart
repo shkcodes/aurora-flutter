@@ -19,9 +19,11 @@ class _$LocationSerializer implements StructuredSerializer<Location> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'title',
-      serializers.serialize(object.title, specifiedType: const FullType(String)),
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
       'woeid',
-      serializers.serialize(object.locationId, specifiedType: const FullType(int)),
+      serializers.serialize(object.locationId,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -39,12 +41,12 @@ class _$LocationSerializer implements StructuredSerializer<Location> {
       final dynamic value = iterator.current;
       switch (key) {
         case 'title':
-          result.title =
-              serializers.deserialize(value, specifiedType: const FullType(String)) as String;
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'woeid':
-          result.locationId =
-              serializers.deserialize(value, specifiedType: const FullType(int)) as int;
+          result.locationId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -81,7 +83,9 @@ class _$Location extends Location {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Location && title == other.title && locationId == other.locationId;
+    return other is Location &&
+        title == other.title &&
+        locationId == other.locationId;
   }
 
   @override
@@ -102,15 +106,11 @@ class LocationBuilder implements Builder<Location, LocationBuilder> {
   _$Location _$v;
 
   String _title;
-
   String get title => _$this._title;
-
   set title(String title) => _$this._title = title;
 
   int _locationId;
-
   int get locationId => _$this._locationId;
-
   set locationId(int locationId) => _$this._locationId = locationId;
 
   LocationBuilder();
@@ -139,7 +139,8 @@ class LocationBuilder implements Builder<Location, LocationBuilder> {
 
   @override
   _$Location build() {
-    final _$result = _$v ?? new _$Location._(title: title, locationId: locationId);
+    final _$result =
+        _$v ?? new _$Location._(title: title, locationId: locationId);
     replace(_$result);
     return _$result;
   }
