@@ -26,12 +26,12 @@ class HomeScreenState extends State<HomeScreen> {
   final HomeBloc bloc = HomeBloc();
 
   HomeScreenState(this.locations);
+
   @override
   void initState() {
     super.initState();
     bloc.dispatch(LocationsUpdateEvent(locations));
   }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,37 +61,38 @@ class HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Opacity(
-                          opacity: 0.0,
+                          opacity: state.locations.length == 1 ? 0.0 : 1.0,
                           child: IconButton(
                             icon: Icon(
-                              Icons.add,
+                              Icons.close,
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => AddLocationScreen()),
-                              );
+                              bloc.dispatch(
+                                  RemoveLocationEvent(state.locations[state.currentPage]));
                             },
                           ),
                         ),
                         Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: state.locations.map((it) {
-                              return Container(
-                                child: Container(
-                                  width: 8.0,
-                                  height: 8.0,
-                                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: state.currentPage == state.locations.indexOf(it)
-                                          ? Colors.white
-                                          : Colors.white24),
-                                ),
-                              );
-                            }).toList(),
+                          child: Opacity(
+                            opacity: state.locations.length == 1 ? 0.0 : 1.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: state.locations.map((it) {
+                                return Container(
+                                  child: Container(
+                                    width: 8.0,
+                                    height: 8.0,
+                                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: state.currentPage == state.locations.indexOf(it)
+                                            ? Colors.white
+                                            : Colors.white24),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                         IconButton(
