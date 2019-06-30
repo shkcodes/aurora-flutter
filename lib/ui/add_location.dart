@@ -16,12 +16,17 @@ class AddLocationScreen extends StatefulWidget {
 }
 
 class AddLocationScreenState extends State<AddLocationScreen> {
-  AddLocationBloc bloc;
+  final AddLocationBloc bloc = AddLocationBloc();
 
   @override
   void initState() {
-    bloc = BlocProvider.of<AddLocationBloc>(context);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,7 +39,7 @@ class AddLocationScreenState extends State<AddLocationScreen> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           final locationsList = prefs.getStringList('locations') ?? [];
           locationsList.add(state.locationId.toString());
-          prefs.setStringList('locations', locationsList);
+          prefs.setStringList('locations', locationsList.toSet().toList());
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),

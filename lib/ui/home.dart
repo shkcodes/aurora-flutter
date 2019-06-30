@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:my_weather_app/bloc/weather_bloc.dart';
 import 'package:my_weather_app/state/weather_state.dart';
-import 'package:my_weather_app/ui/WeatherForecastCarousel.dart';
+import 'package:my_weather_app/ui/add_location.dart';
+import 'package:my_weather_app/ui/weather_forecase_carousel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -77,7 +78,27 @@ class HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 96.0,
+                            height: 24.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AddLocationScreen()),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 32.0,
                           ),
                           Text(
                             state.location.toUpperCase(),
