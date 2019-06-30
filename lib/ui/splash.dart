@@ -13,11 +13,38 @@ class SplashScreen extends StatefulWidget {
   }
 }
 
-class SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+  Animation<double> animation;
+
   @override
   void initState() {
     super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    )
+      ..addListener(() => setState(() {}))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          animationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          animationController.forward();
+        }
+      });
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInOut,
+    );
+
+    animationController.forward();
     startTime();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   startTime() async {
@@ -28,6 +55,7 @@ class SplashScreenState extends State<SplashScreen> {
   Future navigationPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final locationsList = prefs.getStringList('locations') ?? [];
+    animationController.stop();
     if (locationsList.isEmpty) {
       Navigator.pushReplacement(
         context,
@@ -47,24 +75,8 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(48),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset('assets/images/app_icon.png'),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                'AURORA WEATHER',
-                style: TextStyle(fontSize: 24, letterSpacing: 1.2, fontFamily: 'Rokkitt'),
-              ),
-            ],
-          ),
-        ),
+      body: Center(
+        child: ScaleTransition(scale: animation, child: Image.asset('assets/images/app_icon.png')),
       ),
     );
   }
