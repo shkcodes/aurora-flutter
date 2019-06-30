@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +8,6 @@ import 'package:my_weather_app/bloc/add_location_bloc.dart';
 import 'package:my_weather_app/state/add_location_state.dart';
 import 'package:my_weather_app/ui/home.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddLocationScreen extends StatefulWidget {
   final bool isOnboardingFlow;
@@ -22,43 +23,28 @@ class AddLocationScreen extends StatefulWidget {
 class AddLocationScreenState extends State<AddLocationScreen> {
   final AddLocationBloc bloc = AddLocationBloc();
   final bool isOnboardingFlow;
+  StreamSubscription subscription;
 
   AddLocationScreenState({this.isOnboardingFlow});
 
   @override
   void initState() {
+    subscribeToEffects();
     super.initState();
   }
 
   @override
   void dispose() {
     bloc.dispose();
+    subscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     const iconSize = 75.0;
-    return BlocListener<AddLocationEvent, AddLocationState>(
-      bloc: bloc,
-      listener: (context, state) async {
-        if (state.locationId != 0) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          final locationsList = prefs.getStringList('locations') ?? [];
-          locationsList.add(state.locationId.toString());
-          prefs.setStringList('locations', locationsList.toSet().toList());
-          if (isOnboardingFlow != null) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(locationsList.toSet().toList())),
-            );
-          } else {
-            Navigator.pop(context, locationsList.toSet().toList());
-          }
-        }
-      },
-      child: Scaffold(
-          body: BlocBuilder<AddLocationEvent, AddLocationState>(
+    return Scaffold(
+      body: BlocBuilder<AddLocationEvent, AddLocationState>(
         bloc: bloc,
         builder: (context, state) {
           if (state.isLoading) {
@@ -117,7 +103,7 @@ class AddLocationScreenState extends State<AddLocationScreen> {
             );
           }
         },
-      )),
+      ),
     );
   }
 
@@ -126,5 +112,20 @@ class AddLocationScreenState extends State<AddLocationScreen> {
         await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     bloc.dispatch(
         LocationReceivedEvent(latitude: location.latitude, longitude: location.longitude));
+  }
+
+  void subscribeToEffects() {
+    subscription = bloc.effects.stream.listen((effect) async {
+      if (effect is CloseScreen) {
+        if (isOnboardingFlow != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen(effect.locations)),
+          );
+        } else {
+          Navigator.pop(context, effect.locations);
+        }
+      }
+    });
   }
 }

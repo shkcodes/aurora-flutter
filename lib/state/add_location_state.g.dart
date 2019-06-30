@@ -9,19 +9,14 @@ part of 'add_location_state.dart';
 class _$AddLocationState extends AddLocationState {
   @override
   final bool isLoading;
-  @override
-  final int locationId;
 
   factory _$AddLocationState(
           [void Function(AddLocationStateBuilder) updates]) =>
       (new AddLocationStateBuilder()..update(updates)).build();
 
-  _$AddLocationState._({this.isLoading, this.locationId}) : super._() {
+  _$AddLocationState._({this.isLoading}) : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AddLocationState', 'isLoading');
-    }
-    if (locationId == null) {
-      throw new BuiltValueNullFieldError('AddLocationState', 'locationId');
     }
   }
 
@@ -36,21 +31,18 @@ class _$AddLocationState extends AddLocationState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AddLocationState &&
-        isLoading == other.isLoading &&
-        locationId == other.locationId;
+    return other is AddLocationState && isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, isLoading.hashCode), locationId.hashCode));
+    return $jf($jc(0, isLoading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AddLocationState')
-          ..add('isLoading', isLoading)
-          ..add('locationId', locationId))
+          ..add('isLoading', isLoading))
         .toString();
   }
 }
@@ -63,16 +55,11 @@ class AddLocationStateBuilder
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
-  int _locationId;
-  int get locationId => _$this._locationId;
-  set locationId(int locationId) => _$this._locationId = locationId;
-
   AddLocationStateBuilder();
 
   AddLocationStateBuilder get _$this {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
-      _locationId = _$v.locationId;
       _$v = null;
     }
     return this;
@@ -93,8 +80,7 @@ class AddLocationStateBuilder
 
   @override
   _$AddLocationState build() {
-    final _$result = _$v ??
-        new _$AddLocationState._(isLoading: isLoading, locationId: locationId);
+    final _$result = _$v ?? new _$AddLocationState._(isLoading: isLoading);
     replace(_$result);
     return _$result;
   }

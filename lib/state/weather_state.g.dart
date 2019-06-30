@@ -51,7 +51,8 @@ class _$WeatherState extends WeatherState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('WeatherState')
-          ..add('weather', weather)..add('location', location)
+          ..add('weather', weather)
+          ..add('location', location)
           ..add('isLoading', isLoading))
         .toString();
   }
@@ -66,9 +67,7 @@ class WeatherStateBuilder
   set weather(List<Weather> weather) => _$this._weather = weather;
 
   String _location;
-
   String get location => _$this._location;
-
   set location(String location) => _$this._location = location;
 
   bool _isLoading;

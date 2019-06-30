@@ -7,9 +7,6 @@ abstract class AddLocationState implements Built<AddLocationState, AddLocationSt
 
   bool get isLoading;
 
-  int get locationId;
-
   factory AddLocationState([updates(AddLocationStateBuilder b)]) => _$AddLocationState((b) => b
-    ..isLoading = false
-    ..locationId = 0);
+    ..isLoading = false);
 }
