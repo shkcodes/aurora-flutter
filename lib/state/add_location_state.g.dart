@@ -8,13 +8,18 @@ part of 'add_location_state.dart';
 
 class _$AddLocationState extends AddLocationState {
   @override
+  final bool isSearching;
+  @override
   final bool isLoading;
 
   factory _$AddLocationState(
           [void Function(AddLocationStateBuilder) updates]) =>
       (new AddLocationStateBuilder()..update(updates)).build();
 
-  _$AddLocationState._({this.isLoading}) : super._() {
+  _$AddLocationState._({this.isSearching, this.isLoading}) : super._() {
+    if (isSearching == null) {
+      throw new BuiltValueNullFieldError('AddLocationState', 'isSearching');
+    }
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AddLocationState', 'isLoading');
     }
@@ -31,17 +36,20 @@ class _$AddLocationState extends AddLocationState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AddLocationState && isLoading == other.isLoading;
+    return other is AddLocationState &&
+        isSearching == other.isSearching &&
+        isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, isLoading.hashCode));
+    return $jf($jc($jc(0, isSearching.hashCode), isLoading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AddLocationState')
+          ..add('isSearching', isSearching)
           ..add('isLoading', isLoading))
         .toString();
   }
@@ -51,6 +59,10 @@ class AddLocationStateBuilder
     implements Builder<AddLocationState, AddLocationStateBuilder> {
   _$AddLocationState _$v;
 
+  bool _isSearching;
+  bool get isSearching => _$this._isSearching;
+  set isSearching(bool isSearching) => _$this._isSearching = isSearching;
+
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
@@ -59,6 +71,7 @@ class AddLocationStateBuilder
 
   AddLocationStateBuilder get _$this {
     if (_$v != null) {
+      _isSearching = _$v.isSearching;
       _isLoading = _$v.isLoading;
       _$v = null;
     }
@@ -80,7 +93,9 @@ class AddLocationStateBuilder
 
   @override
   _$AddLocationState build() {
-    final _$result = _$v ?? new _$AddLocationState._(isLoading: isLoading);
+    final _$result = _$v ??
+        new _$AddLocationState._(
+            isSearching: isSearching, isLoading: isLoading);
     replace(_$result);
     return _$result;
   }
