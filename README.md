@@ -1,3 +1,3 @@
-# my_weather_app
+# Aurora
 
 A new Flutter application!
